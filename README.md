@@ -1,1 +1,1 @@
-# BOJ
+# To accelerate my Problem Solving skill
