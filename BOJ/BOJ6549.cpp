@@ -4,7 +4,7 @@
 typedef long long ll;
 using namespace std;
 
-ll area=-1;
+ll area;
 
 void Init_Seg(vector<int> &h, vector<int> &tree,int node, int start, int end){
     if(start==end) tree[node]=start;
@@ -47,7 +47,8 @@ int Search(vector<int> &h, vector<int> &tree, int node, int start, int end,int i
 void Calc(vector<int> &h, vector<int> &tree, int start, int end){
     int n=h.size();
     int m=Search(h,tree,1,0,n-1,start,end);
-    area=area>h[m]*(end-start+1)?area:h[m]*(end-start+1);
+    // int형 간의 계산에서 overflow가 발생할 수 있으므로 long long형으로 변환
+    area=area>h[m]*(long long)(end-start+1)?area:h[m]*(long long)(end-start+1);
     if(start<=m-1){
         Calc(h,tree,start,m-1);
     }
@@ -59,6 +60,7 @@ void Calc(vector<int> &h, vector<int> &tree, int start, int end){
 int main(void){
     int n;
     while(1){
+        area=-1;
         scanf("%d",&n);
         if(n==0) break;
         // allocatiing a vector of height information of each histogram
