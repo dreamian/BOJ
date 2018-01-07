@@ -21,33 +21,46 @@ void Init_Seg(vector<int> &h, vector<int> &tree,int node, int start, int end){
     }
 }
 
-void Calc(vector<int> &tree,int node, int start, int end){
-    area=area>tree[node]*(end-start+1)?area:tree[node]*(end-start+1);
-}   
-
 // search the minimum height in range form i to j
-void Search(vector<int> &h, vector<int> &tree, int node, int start, int end,int i, int j){
-    while(node!=tree.size()){
-        int idx=-1;
-        if(start==i && end==j){
-            idx=tree[node];
-        }
-
-
-        int mid=(start+end)/2;
-        Calc(tree,node,start,end);
-        // 탐색된 index에 대해 왼쪽 탐색
-        Search(h,tree,2*node,start,mid,i,j);
-        // 탐색된 index에 대해 오른쪽 탐색
-        Search(h,tree,2*node+1,mid+1,end,i,j);
-
+int Search(vector<int> &h, vector<int> &tree, int node, int start, int end,int i, int j){
+    if(j<start || end<i){
+        return -1;
+    }
+    else if(i<=start && end<=j){
+        return tree[node];
+    }
+    int mid=(start+end) >> 1;
+    int m1=Search(h,tree,2*node,start,mid,i,j);
+    int m2=Search(h,tree,2*node+1,mid+1,end,i,j);
+    if(m1==-1){
+        return m2;
+    }
+    if(m2==-1){
+        return m1;
+    }
+    else{
+        return h[m1]<h[m2]?m1:m2;
     }
 }
 
+// return the calculated area in the range of left and right at lowest height index
+void Calc(vector<int> &h, vector<int> &tree, int start, int end){
+    int n=h.size();
+    int m=Search(h,tree,1,0,n-1,start,end);
+    area=area>h[m]*(end-start+1)?area:h[m]*(end-start+1);
+    if(start<=m-1){
+        Calc(h,tree,start,m-1);
+    }
+    if(m+1<=end){
+        Calc(h,tree,m+1,end);
+    }
+}   
+
 int main(void){
     int n;
-    while(n!=0){
+    while(1){
         scanf("%d",&n);
+        if(n==0) break;
         // allocatiing a vector of height information of each histogram
         vector<int> h(n);
         // calculating the size of seg_tree
@@ -60,9 +73,9 @@ int main(void){
         vector<int> tree(tr_sz);
         // initializing seg_tree
         Init_Seg(h,tree,1,0,n-1);
-        Search(h,tree,1,0,n-1,0,n-1);
+        Calc(h,tree,0,n-1);
 
-        printf("%lld",area);
+        printf("%lld\n",area);
     }
     return 0;
 }
