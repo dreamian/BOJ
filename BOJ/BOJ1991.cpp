@@ -31,7 +31,7 @@ void Make_tree(char a, char b, char c,node* T){
         if(b!='.'){
             T->llink=L;
             T->llink->data=b;
-            p[b-48]=T->llink; 
+            p[b-'A']=T->llink; 
         }                  
         else{
             free(L);
@@ -39,18 +39,18 @@ void Make_tree(char a, char b, char c,node* T){
         if(c!='.'){
             T->rlink=R;
             T->rlink->data=c;
-            p[c-48]=T->rlink;
+            p[c-'A']=T->rlink;
         }
         else{
             free(R);
         }
     }
     else{
-        node* parent=p[a-48];
+        node* parent=p[a-'A'];
         if(b!='.'){
             parent->llink=L;
             parent->llink->data=b;
-            p[b-48]=parent->llink;
+            p[b-'A']=parent->llink;
         }
         else{
             free(L);
@@ -58,7 +58,7 @@ void Make_tree(char a, char b, char c,node* T){
         if(c!='.'){
             parent->rlink=R;
             parent->rlink->data=c;
-            p[c-48]=parent->rlink;
+            p[c-'A']=parent->rlink;
         }
         else{
             free(R);
