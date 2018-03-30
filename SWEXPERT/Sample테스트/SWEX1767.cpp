@@ -103,7 +103,7 @@ int rights(vector< pair<int, int> > v,int idx,int sz,int board[13][13]){
 }
 
 int main(){
-    freopen("input.txt","r",stdin);
+    //freopen("input.txt","r",stdin);
     int t;
     scanf("%d",&t);
         for(int te=1;te<=t;te++){
