@@ -149,7 +149,7 @@ int main()
     }
 
     // get edge info.
-    for(int i=0;i<e;++i)
+    for(int i=0;i<e;++i) 
     {
       int _u, _v, _w;
       scanf("%d %d %d", &_u, &_v, &_w);
